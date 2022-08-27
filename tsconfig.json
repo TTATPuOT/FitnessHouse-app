@@ -1,0 +1,16 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@utils/*": [ "utils/*" ],
+      "@screens/*": [ "screens/*" ],
+      "@components/*": [ "components/*" ],
+      "@slices/*": [ "slices/*" ],
+      "@src/*": [ "./*" ],
+      "@hooks/*": [ "hooks/*" ],
+    }
+  },
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
+}
