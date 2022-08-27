@@ -18,7 +18,7 @@ export default class ScheduleParser {
 		this.officeName = officeName
 	}
 
-	async download() {
+	private async download() {
 		const html = await HtmlDownloader.getSchedule(this.officeName)
 
 		await this.parseHtml(html)
@@ -33,11 +33,31 @@ export default class ScheduleParser {
 		for (const tr of trs) {
 			this.getLessons(tr)
 		}
+
+		await this.parseForNextWeek(root)
+	}
+
+	private async parseForNextWeek(root: HTMLElement) {
+		const links = root.querySelectorAll('a')
+		for (const link of links) {
+			if (link.innerText.includes('Следующая неделя')) {
+				const href = link.getAttribute('href')
+				if (href) return this.downloadNextWeek(href)
+			}
+		}
+	}
+
+	private async downloadNextWeek(link: string) {
+		const html = await HtmlDownloader.getScheduleNextWeek(link)
+
+		await this.parseHtml(html)
 	}
 
 	private getColumns(columns: HTMLElement[]) {
-		let columnIndex = 0
+		let columnIndex = this.columns.length - 1
 		for (const column of columns) {
+			columnIndex++
+
 			const text = column.text
 			if (text.includes(',')) {
 				const dateText = text.split(',')[0].split('.')
@@ -52,7 +72,6 @@ export default class ScheduleParser {
 					timePeriods: [],
 				})
 			}
-			columnIndex++
 		}
 	}
 
@@ -66,13 +85,14 @@ export default class ScheduleParser {
 
 	private getLessons(tr: HTMLElement) {
 		const tds = tr.querySelectorAll('td')
-		const containTimeColumn = !!tr.querySelector('td[rowspan]')
 
-		let columnIndex = containTimeColumn ? -1 : 0
-		for (const td of tds) {
-			columnIndex++
+		let columnIndex = this.columns.length
+		for (const td of tds.reverse()) {
+			columnIndex--
 
-			const column = this.columns.find(c => c.index === columnIndex)
+			if (td.getAttribute('rowspan')) break
+
+			const column = this.columns[columnIndex]
 			if (!column) continue
 
 			const lesson = ScheduleParser.getLessonDataFromTd(td)
@@ -140,6 +160,10 @@ export default class ScheduleParser {
 		return this.columns.find(c => {
 			return c.date.toDateString() === dateString
 		})
+	}
+
+	getDates(): Date[] {
+		return this.columns.map(c => c.date)
 	}
 }
 

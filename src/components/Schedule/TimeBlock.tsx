@@ -22,7 +22,7 @@ const TimeBlock = ({ period }: TimeBlockProps) => {
 		}
 
 		return blocks
-	}, [period.time])
+	}, [period])
 	const status = useMemo<string>(() => {
 		const currentTime = new Date().getHours()
 
@@ -57,12 +57,14 @@ const styles = StyleSheet.create({
 	time: {
 		backgroundColor: '#FFF',
 		flexDirection: 'row',
+		justifyContent: 'flex-end',
 		marginLeft: -15,
 		padding: 3,
 		paddingLeft: 15,
 		paddingRight: 10,
 		borderTopRightRadius: 20,
 		borderBottomRightRadius: 20,
+		width: 85,
 	},
 	timeText: {
 		color: '#000',

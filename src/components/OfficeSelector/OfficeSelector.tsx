@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useAppSelector } from '@hooks/redux'
-import selectOffice from '@components/selectors/selectOffice'
+import selectOffice from '@selectors/selectOffice'
 
 const OfficeSelector = () => {
 	const navigation = useNavigation()

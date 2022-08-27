@@ -8,7 +8,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import moment from 'moment'
 import 'moment/locale/ru'
 import { Provider } from 'react-redux'
-import { store } from './store'
+import { persistor, store } from './store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 moment.locale(['ru', 'en'])
 
@@ -17,20 +18,22 @@ const Drawer = createStackNavigator()
 const App = () => {
 	return (
 		<Provider store={store}>
-			<SafeAreaView style={{ flex: 1 }}>
-				<NavigationContainer theme={DarkTheme}>
-					<Drawer.Navigator
-						initialRouteName='Home'
-						screenOptions={{ headerShown: false }}
-					>
-						<Drawer.Screen name='Home' component={Home} />
-						<Drawer.Screen
-							name='OfficeList'
-							component={OfficeList}
-						/>
-					</Drawer.Navigator>
-				</NavigationContainer>
-			</SafeAreaView>
+			<PersistGate persistor={persistor}>
+				<SafeAreaView style={{ flex: 1 }}>
+					<NavigationContainer theme={DarkTheme}>
+						<Drawer.Navigator
+							initialRouteName='Home'
+							screenOptions={{ headerShown: false }}
+						>
+							<Drawer.Screen name='Home' component={Home} />
+							<Drawer.Screen
+								name='OfficeList'
+								component={OfficeList}
+							/>
+						</Drawer.Navigator>
+					</NavigationContainer>
+				</SafeAreaView>
+			</PersistGate>
 		</Provider>
 	)
 }

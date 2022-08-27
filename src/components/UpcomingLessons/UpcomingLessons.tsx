@@ -12,6 +12,9 @@ const UpcomingLessons = ({ column }: UpcomingLessonsProps) => {
 	const [time, setTime] = useState<string>('')
 
 	const timePeriod = useMemo<TimePeriod | undefined>(() => {
+		if (column.date.toDateString() !== new Date().toDateString())
+			return undefined
+
 		const nextHour = new Date().getHours() + 1
 
 		for (const period of column.timePeriods) {

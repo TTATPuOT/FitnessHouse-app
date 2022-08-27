@@ -16,7 +16,7 @@ const Schedule = ({ column }: ScheduleProps) => {
 		}
 
 		return blocks
-	}, [column.timePeriods])
+	}, [column])
 
 	return <View style={styles.container}>{timeBlocks}</View>
 }

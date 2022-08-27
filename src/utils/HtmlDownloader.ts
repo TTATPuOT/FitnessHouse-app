@@ -9,6 +9,11 @@ export default class HtmlDownloader {
 			}
 		)
 	}
+	static async getScheduleNextWeek(link: string): Promise<string> {
+		return HtmlDownloader.downloadUrlGet(
+			`https://www.fitnesshouse.ru/${link}`
+		)
+	}
 
 	static async getIndexPage(): Promise<string> {
 		return HtmlDownloader.downloadUrlGet(
@@ -38,6 +43,7 @@ export default class HtmlDownloader {
 		url: string,
 		params: RequestInit = {}
 	): Promise<string> {
+		console.log('Start downloading of', url, 'with params', params)
 		const request = await fetch(url, params)
 
 		return request.text()

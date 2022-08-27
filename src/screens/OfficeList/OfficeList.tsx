@@ -5,7 +5,7 @@ import List from '@components/List'
 import { ListElement } from '@components/List/List'
 import LoadingScreen from '@components/LoadingScreen'
 import { useAppDispatch } from '@hooks/redux'
-import { selectOffice } from '@slices/data'
+import { setOffice } from '@slices/data'
 import { useNavigation } from '@react-navigation/native'
 
 const OfficeList = () => {
@@ -35,7 +35,7 @@ const OfficeList = () => {
 
 	const handleChange = useCallback(
 		(officeName: string) => {
-			dispatch(selectOffice(officeName))
+			dispatch(setOffice(officeName))
 			navigation.goBack()
 		},
 		[dispatch, navigation]

@@ -10,6 +10,7 @@
       "@slices/*": [ "slices/*" ],
       "@src/*": [ "./*" ],
       "@hooks/*": [ "hooks/*" ],
+      "@selectors/*": [ "selectors/*" ],
     }
   },
   "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
