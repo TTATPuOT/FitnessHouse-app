@@ -2,13 +2,8 @@
 #
 .DS_Store
 
-# IDE
-#
-.idea
-
 # Xcode
 #
-build/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -65,3 +60,7 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+android/gradle.properties
+android/app/*.jks
+android/app/*.pepk

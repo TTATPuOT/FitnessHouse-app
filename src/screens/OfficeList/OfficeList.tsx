@@ -6,11 +6,11 @@ import { ListElement } from '@components/List/List'
 import LoadingScreen from '@components/LoadingScreen'
 import { useAppDispatch } from '@hooks/redux'
 import { setOffice } from '@slices/data'
-import { useNavigation } from '@react-navigation/native'
+import { useAppNavigation } from '@hooks/useAppNavigation'
 
 const OfficeList = () => {
 	const dispatch = useAppDispatch()
-	const navigation = useNavigation()
+	const navigation = useAppNavigation()
 
 	const [offices, setOffices] = useState<OfficesParser>()
 	const [loading, setLoading] = useState<boolean>(true)

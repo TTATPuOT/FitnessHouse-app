@@ -1,14 +1,16 @@
 import { Lesson } from '@utils/ScheduleParser'
-import { useNavigation } from '@react-navigation/native'
 import { useCallback } from 'react'
+import { useAppNavigation } from '@hooks/useAppNavigation'
 
 const useNavigateToDetails = () => {
-	const navigation = useNavigation()
+	const navigation = useAppNavigation()
 
 	return useCallback(
 		(lesson: Lesson) => {
-			//@ts-ignore
-			navigation.navigate('Details', { lesson })
+			navigation.navigate('Details', {
+				lesson,
+				date: new Date().toDateString(), //TODO: Вынести дату в объект Lesson
+			})
 		},
 		[navigation]
 	)

@@ -10,6 +10,7 @@ import LoadingScreen from '@components/LoadingScreen'
 import diffClamp = Animated.diffClamp
 import HomeHeader from '@screens/Home/HomeHeader'
 import AnimatedValue = Animated.AnimatedValue
+import Footer from '@components/Footer'
 
 const HEADER_MIN_HEIGHT = 90
 
@@ -96,6 +97,7 @@ const Home = () => {
 					<>
 						<UpcomingLessons column={column} />
 						<Schedule column={column} />
+						<Footer />
 					</>
 				)}
 			</Animated.ScrollView>

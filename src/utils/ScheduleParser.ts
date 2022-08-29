@@ -2,6 +2,7 @@ import HtmlDownloader from './HtmlDownloader'
 import convertToDom from '@utils/HtmlToDomConverter'
 import HTMLElement from 'node-html-parser/dist/nodes/html'
 import { decode } from 'html-entities'
+import { v4 } from 'uuid'
 
 export default class ScheduleParser {
 	private officeName: string
@@ -114,6 +115,7 @@ export default class ScheduleParser {
 		if (!title || !time) return null
 
 		return {
+			id: v4(),
 			title: decode(
 				title.replace(/(\$\$)|([C|С]ЕКЦИЯ)|(  )/gim, '').trim()
 			),
@@ -182,6 +184,7 @@ export interface TimePeriod {
 }
 
 export interface Lesson {
+	id: string
 	time: number
 	title: string
 	paid: boolean

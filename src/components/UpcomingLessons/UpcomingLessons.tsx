@@ -44,7 +44,7 @@ const UpcomingLessons = ({ column }: UpcomingLessonsProps) => {
 
 	useEffect(() => {
 		updateTime()
-	}, [])
+	}, [column.date])
 
 	if (lessonsBlocks.length <= 0) return null
 

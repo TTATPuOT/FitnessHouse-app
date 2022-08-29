@@ -14,7 +14,7 @@ const TimeBlock = ({ period }: TimeBlockProps) => {
 		for (const [index, lesson] of period.lessons.entries()) {
 			blocks.push(
 				<LessonBlock
-					key={lesson.time + lesson.title}
+					key={lesson.id}
 					lesson={lesson}
 					last={!period.lessons[index + 1]}
 				/>

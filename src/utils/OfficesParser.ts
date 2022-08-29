@@ -32,7 +32,9 @@ export default class OfficesParser {
 	}
 
 	getAll(): Office[] {
-		return Array.from(this.list)
+		return Array.from(this.list).sort((a, b) =>
+			a.name.localeCompare(b.name)
+		)
 	}
 }
 

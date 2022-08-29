@@ -1,15 +1,14 @@
 import React, { useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { useAppSelector } from '@hooks/redux'
 import selectOffice from '@selectors/selectOffice'
+import { useAppNavigation } from '@hooks/useAppNavigation'
 
 const OfficeSelector = () => {
-	const navigation = useNavigation()
+	const navigation = useAppNavigation()
 	const office = useAppSelector(selectOffice)
 
 	const handleClick = useCallback(() => {
-		//@ts-ignore
 		navigation.navigate('OfficeList')
 	}, [])
 

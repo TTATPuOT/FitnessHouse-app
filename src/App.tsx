@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'
+import 'react-native-get-random-values'
 import React, { useEffect } from 'react'
 import { DarkTheme, NavigationContainer } from '@react-navigation/native'
 import Home from '@screens/Home'
@@ -11,6 +12,7 @@ import { Provider } from 'react-redux'
 import { persistor, store } from './store'
 import { PersistGate } from 'redux-persist/integration/react'
 import Details from '@screens/Details'
+import About from '@screens/About'
 import SplashScreen from 'react-native-splash-screen'
 
 moment.locale(['ru', 'en'])
@@ -40,6 +42,18 @@ const App = () => {
 								name='Details'
 								//@ts-ignore
 								component={Details}
+								options={{
+									headerShown: true,
+									title: 'Детали',
+								}}
+							/>
+							<Drawer.Screen
+								name='About'
+								component={About}
+								options={{
+									headerShown: true,
+									title: 'Об авторе',
+								}}
 							/>
 						</Drawer.Navigator>
 					</NavigationContainer>
