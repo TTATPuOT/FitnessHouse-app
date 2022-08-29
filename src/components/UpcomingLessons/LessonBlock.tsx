@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
 	ImageBackground,
+	ImageRequireSource,
 	StyleSheet,
 	Text,
-	TouchableOpacity,
 	View,
 } from 'react-native'
 import { Lesson } from '@utils/ScheduleParser'
@@ -12,20 +12,40 @@ export interface LessonBlockProps {
 	lesson: Lesson
 }
 
+const IMAGES = [
+	require('./img/1.png'),
+	require('./img/2.png'),
+	require('./img/3.png'),
+	require('./img/4.png'),
+]
+const WATER_IMAGE = require('./img/water.png')
+
 const LessonBlock = ({ lesson }: LessonBlockProps) => {
+	const [img] = useState<ImageRequireSource>(getImgUri(lesson))
+
 	return (
-		<TouchableOpacity activeOpacity={0.5} style={styles.container}>
+		<View style={styles.container}>
 			<ImageBackground
 				imageStyle={{ resizeMode: 'cover' }}
-				source={require('./img/img.png')}
+				source={img}
 				style={styles.image}
 			/>
 			<View style={styles.text}>
 				<Text style={styles.title}>{lesson.title}</Text>
 				<Text style={styles.description}>{lesson.location}</Text>
 			</View>
-		</TouchableOpacity>
+		</View>
 	)
+}
+
+function getImgUri(lesson: Lesson): ImageRequireSource {
+	if (lesson.location?.includes('бассейн')) return WATER_IMAGE
+
+	return IMAGES[randomNumber(0, 3)]
+}
+
+function randomNumber(min: number, max: number): number {
+	return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 const styles = StyleSheet.create({

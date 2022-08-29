@@ -2,7 +2,7 @@ import HtmlDownloader from './HtmlDownloader'
 import convertToDom from '@utils/HtmlToDomConverter'
 
 export default class OfficesParser {
-	private list: Set<string> = new Set()
+	private list: Set<Office> = new Set()
 
 	static async getInstance(): Promise<OfficesParser> {
 		const offices = new OfficesParser()
@@ -23,14 +23,20 @@ export default class OfficesParser {
 		if (!select) return
 
 		for (const input of select.querySelectorAll('option')) {
-			const text = input.rawText
-			if (text.includes('Выберите')) continue
+			const name = input.rawText
+			const code = input.getAttribute('value')
+			if (name.includes('Выберите') || !code) continue
 
-			this.list.add(text)
+			this.list.add({ name, code })
 		}
 	}
 
-	getAll(): string[] {
+	getAll(): Office[] {
 		return Array.from(this.list)
 	}
+}
+
+export interface Office {
+	name: string
+	code: string
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { FlatLis, StyleSheet } from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
 import DayBlock from '@components/DateSelector/DayBlock'
 import { useAppSelector } from '@hooks/redux'
 import selectDate from '@selectors/selectDate'
@@ -67,9 +67,6 @@ const getDateIndex = (date: Date, dates: Date[]) => {
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
-	},
-	padding: {
-		width: 20,
 	},
 })
 

@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Lesson } from '@utils/ScheduleParser'
-import Tag from '@components/Schedule/Tag'
+import Tag from '@components/Tag'
+import useNavigateToDetails from '@hooks/useNavigateToDetails'
 
 export interface LessonBlockProps {
 	last?: boolean
@@ -9,6 +10,8 @@ export interface LessonBlockProps {
 }
 
 const LessonBlock = ({ last, lesson }: LessonBlockProps) => {
+	const handlePress = useNavigateToDetails()
+
 	const containerStyles = useMemo(() => {
 		const stylesArray = [styles.container]
 		//@ts-ignore
@@ -18,7 +21,11 @@ const LessonBlock = ({ last, lesson }: LessonBlockProps) => {
 	}, [last])
 
 	return (
-		<TouchableOpacity activeOpacity={0.5} style={containerStyles}>
+		<TouchableOpacity
+			activeOpacity={0.5}
+			style={containerStyles}
+			onPress={() => handlePress(lesson)}
+		>
 			<Text style={styles.title}>{lesson.title}</Text>
 			<Text style={styles.location}>{lesson.location}</Text>
 			<Text style={styles.teacher}>{lesson.teacher}</Text>

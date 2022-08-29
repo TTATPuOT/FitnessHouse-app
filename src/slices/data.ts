@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { Office } from '@utils/OfficesParser'
 
 export interface DataState {
-	office?: string
+	office?: Office
 	date: string
 }
 
@@ -14,7 +15,7 @@ export const dataSlice = createSlice({
 	name: 'data',
 	initialState,
 	reducers: {
-		setOffice: (state, action: PayloadAction<string>) => {
+		setOffice: (state, action: PayloadAction<Office>) => {
 			state.office = action.payload
 		},
 		setDate: (state, action: PayloadAction<string>) => {

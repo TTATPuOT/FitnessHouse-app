@@ -16,7 +16,9 @@ const OfficeSelector = () => {
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity onPress={handleClick}>
-				<Text style={styles.title}>{office ?? 'Выберите филиал'}</Text>
+				<Text style={styles.title}>
+					{office?.name ?? 'Выберите филиал'}
+				</Text>
 			</TouchableOpacity>
 		</View>
 	)

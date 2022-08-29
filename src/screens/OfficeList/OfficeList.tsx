@@ -28,17 +28,22 @@ const OfficeList = () => {
 		if (!offices) return []
 
 		return offices.getAll().map(office => ({
-			text: office,
-			value: office,
+			text: office.name,
+			value: office.code,
 		}))
 	}, [offices])
 
 	const handleChange = useCallback(
-		(officeName: string) => {
-			dispatch(setOffice(officeName))
+		(officeCode: string) => {
+			if (!offices) return
+
+			const office = offices.getAll().find(o => o.code === officeCode)
+			if (!office) return
+
+			dispatch(setOffice(office))
 			navigation.goBack()
 		},
-		[dispatch, navigation]
+		[dispatch, navigation, offices]
 	)
 
 	if (loading) return <LoadingScreen />

@@ -108,12 +108,15 @@ export default class ScheduleParser {
 		const location = td.querySelector('.place')?.innerHTML
 		const onclick = `${td.getAttribute('onclick')}`
 		const paid = !!title?.includes('$$')
-		const isSection = !!title?.includes('СЕКЦИЯ')
+		const isSection =
+			!!title?.includes('СЕКЦИЯ') || !!title?.includes('CЕКЦИЯ')
 
 		if (!title || !time) return null
 
 		return {
-			title: decode(title.replace(/(\$\$)|(СЕКЦИЯ)|(  )/gim, '').trim()),
+			title: decode(
+				title.replace(/(\$\$)|([C|С]ЕКЦИЯ)|(  )/gim, '').trim()
+			),
 			description: ScheduleParser.getDescriptionFromOnClick(onclick),
 			time: parseInt(time.split('.')[0]),
 			teacher,

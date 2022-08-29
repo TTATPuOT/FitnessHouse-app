@@ -3,15 +3,15 @@ import { StyleSheet, Animated } from 'react-native'
 import Schedule from '@components/Schedule'
 import ScheduleParser, { Column } from '@utils/ScheduleParser'
 import UpcomingLessons from '@components/UpcomingLessons'
-import OfficeSelector from '@components/OfficeSelector'
 import { useAppSelector } from '@hooks/redux'
 import selectOffice from '@selectors/selectOffice'
-import DateSelector from '@components/DateSelector'
 import selectDate from '@selectors/selectDate'
 import LoadingScreen from '@components/LoadingScreen'
 import diffClamp = Animated.diffClamp
+import HomeHeader from '@screens/Home/HomeHeader'
+import AnimatedValue = Animated.AnimatedValue
 
-const HEADER_HEIGHT = 175
+const HEADER_MIN_HEIGHT = 90
 
 const Home = () => {
 	const office = useAppSelector(selectOffice)
@@ -20,9 +20,17 @@ const Home = () => {
 	const [schedule, setSchedule] = useState<ScheduleParser>()
 	const [column, setColumn] = useState<Column>()
 	const [loading, setLoading] = useState<boolean>(false)
+	const [headerHeight, setHeaderHeight] = useState<number>(0)
+	const [minHeaderHeight, setMinHeaderHeight] = useState<number>(0)
+
+	useEffect(() => {
+		let newValue = headerHeight - HEADER_MIN_HEIGHT
+		if (newValue < 0) newValue = 0
+		setMinHeaderHeight(newValue)
+	}, [headerHeight])
 
 	const scrollY = useRef(new Animated.Value(0))
-	const scrollYClamped = diffClamp(scrollY.current, 0, HEADER_HEIGHT)
+	const scrollYClamped = diffClamp(scrollY.current, 0, minHeaderHeight)
 
 	useEffect(() => {
 		if (office) handleOfficeChange()
@@ -37,7 +45,7 @@ const Home = () => {
 		setSchedule(undefined)
 		setColumn(undefined)
 		setLoading(true)
-		ScheduleParser.getInstance(office).then(schedule => {
+		ScheduleParser.getInstance(office.code).then(schedule => {
 			setSchedule(schedule)
 			setColumn(schedule.getForDate(date))
 			setLoading(false)
@@ -62,26 +70,25 @@ const Home = () => {
 		}
 	)
 	const translateY = scrollYClamped.interpolate({
-		inputRange: [0, HEADER_HEIGHT],
-		outputRange: [0, -(HEADER_HEIGHT / 2)],
+		inputRange: [0, minHeaderHeight],
+		outputRange: [0, -minHeaderHeight],
 	})
-	const translateYNumber = useRef()
+	const translateYNumber = useRef<AnimatedValue>()
 	translateY.addListener(({ value }) => {
 		translateYNumber.current = value
 	})
 
 	return (
 		<>
-			<Animated.View
-				style={[styles.header, { transform: [{ translateY }] }]}
-			>
-				<OfficeSelector />
-				{!!schedule && <DateSelector dates={schedule.getDates()} />}
-			</Animated.View>
+			<HomeHeader
+				translateY={translateY}
+				dates={schedule?.getDates()}
+				setHeaderHeight={setHeaderHeight}
+			/>
 			<Animated.ScrollView
 				style={styles.container}
 				onScroll={handleScroll}
-				contentContainerStyle={{ paddingTop: HEADER_HEIGHT }}
+				contentContainerStyle={{ paddingTop: headerHeight }}
 				showsVerticalScrollIndicator={false}
 			>
 				{loading && <LoadingScreen />}
@@ -99,17 +106,6 @@ const Home = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-	},
-	header: {
-		position: 'absolute',
-		zIndex: 1,
-		left: 0,
-		top: 0,
-		width: '100%',
-		backgroundColor: '#000',
-		paddingBottom: 10,
-		borderWidth: 2,
-		borderBottomColor: '#333',
 	},
 })
 
