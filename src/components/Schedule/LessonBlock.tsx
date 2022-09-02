@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontFamily: 'Montserrat-Bold',
 		marginBottom: 20,
+		color: '#FFF',
 	},
 	location: {
 		fontFamily: 'Montserrat-Medium',

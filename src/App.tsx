@@ -17,7 +17,7 @@ import SplashScreen from 'react-native-splash-screen'
 
 moment.locale(['ru', 'en'])
 
-const Drawer = createStackNavigator()
+const Stack = createStackNavigator()
 
 const App = () => {
 	useEffect(() => {
@@ -29,16 +29,16 @@ const App = () => {
 			<PersistGate persistor={persistor}>
 				<SafeAreaView style={{ flex: 1 }}>
 					<NavigationContainer theme={DarkTheme}>
-						<Drawer.Navigator
+						<Stack.Navigator
 							initialRouteName='Home'
 							screenOptions={{ headerShown: false }}
 						>
-							<Drawer.Screen name='Home' component={Home} />
-							<Drawer.Screen
+							<Stack.Screen name='Home' component={Home} />
+							<Stack.Screen
 								name='OfficeList'
 								component={OfficeList}
 							/>
-							<Drawer.Screen
+							<Stack.Screen
 								name='Details'
 								//@ts-ignore
 								component={Details}
@@ -47,7 +47,7 @@ const App = () => {
 									title: 'Детали',
 								}}
 							/>
-							<Drawer.Screen
+							<Stack.Screen
 								name='About'
 								component={About}
 								options={{
@@ -55,7 +55,7 @@ const App = () => {
 									title: 'Об авторе',
 								}}
 							/>
-						</Drawer.Navigator>
+						</Stack.Navigator>
 					</NavigationContainer>
 				</SafeAreaView>
 			</PersistGate>

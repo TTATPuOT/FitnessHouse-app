@@ -7,6 +7,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
 
 const About = () => {
 	const handleLinkClick = useCallback(
@@ -47,7 +48,10 @@ const About = () => {
 				<Text style={[styles.h1, styles.link]}>patriotovsky.ru</Text>
 			</TouchableOpacity>
 			<View style={styles.space} />
-			<Text style={styles.h2}>Создано в 2021 с 💖</Text>
+			<Text style={styles.h2}>
+				Версия приложения {DeviceInfo.getVersion()}
+			</Text>
+			<Text style={styles.h2}>Создано в 2022 с 💖</Text>
 		</ScrollView>
 	)
 }
@@ -61,9 +65,11 @@ const styles = StyleSheet.create({
 	h1: {
 		fontFamily: 'Montserrat-Bold',
 		fontSize: 20,
+		color: '#FFF',
 	},
 	h2: {
 		fontFamily: 'Montserrat-Medium',
+		color: '#FFF',
 	},
 	link: {
 		textDecorationLine: 'underline',

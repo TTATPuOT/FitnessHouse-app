@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:build": "cd android && ./gradlew bundleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -26,6 +27,7 @@
     "object-to-formdata": "^4.4.2",
     "react": "18.0.0",
     "react-native": "0.69.5",
+    "react-native-device-info": "^10.0.2",
     "react-native-gesture-handler": "^2.6.0",
     "react-native-get-random-values": "^1.8.0",
     "react-native-reanimated": "^2.10.0",

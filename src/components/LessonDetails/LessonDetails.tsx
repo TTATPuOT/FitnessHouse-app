@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 32,
 		fontFamily: 'Montserrat-Bold',
+		color: '#FFF',
 	},
 	location: {
 		marginTop: 20,

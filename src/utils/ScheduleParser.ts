@@ -62,6 +62,7 @@ export default class ScheduleParser {
 			const text = column.text
 			if (text.includes(',')) {
 				const dateText = text.split(',')[0].split('.')
+
 				const date = ScheduleParser.convertDayMonthToDate(
 					parseInt(dateText[0]),
 					parseInt(dateText[1])
@@ -78,8 +79,8 @@ export default class ScheduleParser {
 
 	private static convertDayMonthToDate(day: number, month: number): Date {
 		const date = new Date()
-		date.setDate(day)
 		date.setMonth(month - 1)
+		date.setDate(day)
 
 		return date
 	}

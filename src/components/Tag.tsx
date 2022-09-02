@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 4,
 		borderRadius: 10,
 		marginLeft: 10,
+		color: '#FFF',
 	},
 	paid: {
 		backgroundColor: '#FE6158',
