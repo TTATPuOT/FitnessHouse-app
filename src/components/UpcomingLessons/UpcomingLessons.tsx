@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Column, TimePeriod } from '@utils/ScheduleParser'
 import LessonBlock from '@components/UpcomingLessons/LessonBlock'
 import moment from 'moment'
 
 export interface UpcomingLessonsProps {
 	column: Column
+	handlePress: (lessonId: string) => void
 }
 
-const UpcomingLessons = ({ column }: UpcomingLessonsProps) => {
+const UpcomingLessons = ({ column, handlePress }: UpcomingLessonsProps) => {
 	const [time, setTime] = useState<string>('')
 
 	const timePeriod = useMemo<TimePeriod | undefined>(() => {
@@ -28,7 +29,9 @@ const UpcomingLessons = ({ column }: UpcomingLessonsProps) => {
 		if (!timePeriod) return []
 
 		return timePeriod.lessons.map(l => (
-			<LessonBlock lesson={l} key={l.title} />
+			<TouchableOpacity key={l.title} onPress={() => handlePress(l.id)}>
+				<LessonBlock lesson={l} />
+			</TouchableOpacity>
 		))
 	}, [timePeriod])
 
@@ -71,5 +74,9 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 })
+
+UpcomingLessons.defaultProps = {
+	handlePress: () => {},
+}
 
 export default UpcomingLessons

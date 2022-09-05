@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { StyleSheet, Animated } from 'react-native'
 import Schedule from '@components/Schedule'
 import ScheduleParser, { Column } from '@utils/ScheduleParser'
-import UpcomingLessons from '@components/UpcomingLessons'
 import { useAppSelector } from '@hooks/redux'
 import selectOffice from '@selectors/selectOffice'
 import selectDate from '@selectors/selectDate'
@@ -10,7 +9,6 @@ import LoadingScreen from '@components/LoadingScreen'
 import diffClamp = Animated.diffClamp
 import HomeHeader from '@screens/Home/HomeHeader'
 import AnimatedValue = Animated.AnimatedValue
-import Footer from '@components/Footer'
 
 const HEADER_MIN_HEIGHT = 90
 
@@ -86,29 +84,18 @@ const Home = () => {
 				dates={schedule?.getDates()}
 				setHeaderHeight={setHeaderHeight}
 			/>
-			<Animated.ScrollView
-				style={styles.container}
-				onScroll={handleScroll}
-				contentContainerStyle={{ paddingTop: headerHeight }}
-				showsVerticalScrollIndicator={false}
-			>
-				{loading && <LoadingScreen />}
-				{!!column && !!schedule && (
-					<>
-						<UpcomingLessons column={column} />
-						<Schedule column={column} />
-						<Footer />
-					</>
-				)}
-			</Animated.ScrollView>
+			{loading && <LoadingScreen />}
+			{!!column && !!schedule && (
+				<Schedule
+					column={column}
+					showUpcomingLessons
+					showFooter
+					handleScroll={handleScroll}
+					style={{ paddingTop: headerHeight }}
+				/>
+			)}
 		</>
 	)
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-})
 
 export default Home

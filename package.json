@@ -5,12 +5,14 @@
   "scripts": {
     "android": "react-native run-android",
     "android:build": "cd android && ./gradlew bundleRelease",
+    "android:apk": "cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@mobile-reality/react-native-select-pro": "^1.11.1",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-masked-view/masked-view": "^0.2.7",
     "@react-navigation/drawer": "^6.4.4",

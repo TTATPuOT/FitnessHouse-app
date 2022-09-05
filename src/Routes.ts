@@ -9,6 +9,7 @@ export type RootStackParamList = {
 		date: string
 	}
 	About: undefined
+	Filters: undefined
 }
 
 export type HomeScreenNavigationProp = NativeStackNavigationProp<

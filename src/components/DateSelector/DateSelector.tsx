@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 import DayBlock from '@components/DateSelector/DayBlock'
 import { useAppSelector } from '@hooks/redux'
@@ -24,12 +24,7 @@ const DateSelector = ({ dates }: DateSelectorProps) => {
 		[date]
 	)
 
-	const initialScrollIndex = useMemo<number>(
-		() => getDateIndex(date, dates),
-		[date, dates]
-	)
-
-	useEffect(() => {
+	const scrollToIndex = useCallback(() => {
 		if (!flatListRef.current) return
 
 		const index = getDateIndex(date, dates)
@@ -38,8 +33,11 @@ const DateSelector = ({ dates }: DateSelectorProps) => {
 			flatListRef.current.scrollToIndex({
 				animated: true,
 				index,
-				viewPosition: 0.5,
+				viewPosition: 0.25,
 			})
+	}, [flatListRef, date, dates])
+	useEffect(() => {
+		scrollToIndex()
 	}, [dates, date])
 
 	return (
@@ -53,7 +51,7 @@ const DateSelector = ({ dates }: DateSelectorProps) => {
 			horizontal
 			showsHorizontalScrollIndicator={false}
 			style={styles.container}
-			initialScrollIndex={initialScrollIndex}
+			onLayout={scrollToIndex}
 			contentContainerStyle={{ paddingRight: 20 }}
 		/>
 	)

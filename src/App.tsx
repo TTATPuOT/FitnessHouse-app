@@ -14,6 +14,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Details from '@screens/Details'
 import About from '@screens/About'
 import SplashScreen from 'react-native-splash-screen'
+import Filters from '@screens/Filters'
+import { SelectProvider } from '@mobile-reality/react-native-select-pro'
 
 moment.locale(['ru', 'en'])
 
@@ -27,37 +29,50 @@ const App = () => {
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
-				<SafeAreaView style={{ flex: 1 }}>
-					<NavigationContainer theme={DarkTheme}>
-						<Stack.Navigator
-							initialRouteName='Home'
-							screenOptions={{ headerShown: false }}
-						>
-							<Stack.Screen name='Home' component={Home} />
-							<Stack.Screen
-								name='OfficeList'
-								component={OfficeList}
-							/>
-							<Stack.Screen
-								name='Details'
-								//@ts-ignore
-								component={Details}
-								options={{
-									headerShown: true,
-									title: 'Детали',
-								}}
-							/>
-							<Stack.Screen
-								name='About'
-								component={About}
-								options={{
-									headerShown: true,
-									title: 'Об авторе',
-								}}
-							/>
-						</Stack.Navigator>
-					</NavigationContainer>
-				</SafeAreaView>
+				<SelectProvider>
+					<SafeAreaView style={{ flex: 1 }}>
+						<NavigationContainer theme={DarkTheme}>
+							<Stack.Navigator initialRouteName='Home'>
+								<Stack.Screen
+									name='Home'
+									component={Home}
+									options={{
+										headerShown: false,
+									}}
+								/>
+								<Stack.Screen
+									name='OfficeList'
+									component={OfficeList}
+									options={{
+										headerShown: false,
+									}}
+								/>
+								<Stack.Screen
+									name='Details'
+									//@ts-ignore
+									component={Details}
+									options={{
+										title: 'Детали',
+									}}
+								/>
+								<Stack.Screen
+									name='Filters'
+									component={Filters}
+									options={{
+										title: 'Фильтры',
+									}}
+								/>
+								<Stack.Screen
+									name='About'
+									component={About}
+									options={{
+										title: 'Об авторе',
+									}}
+								/>
+							</Stack.Navigator>
+						</NavigationContainer>
+					</SafeAreaView>
+				</SelectProvider>
 			</PersistGate>
 		</Provider>
 	)

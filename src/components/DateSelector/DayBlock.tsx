@@ -23,7 +23,7 @@ const DayBlock = ({ date, selected }: DayBlockProps) => {
 			onPress={handlePress}
 			style={[
 				styles.container,
-				{ backgroundColor: selected ? '#888' : '#FFF' },
+				{ backgroundColor: selected ? '#FFF' : '#888' },
 			]}
 		>
 			<Text style={styles.day}>{dayOfWeek}</Text>
