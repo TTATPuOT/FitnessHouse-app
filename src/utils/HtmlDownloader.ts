@@ -1,4 +1,4 @@
-import { serialize } from 'object-to-formdata'
+import { serialize } from 'object-to-formdata';
 
 export default class HtmlDownloader {
 	static async getSchedule(officeName: string): Promise<string> {
@@ -9,10 +9,15 @@ export default class HtmlDownloader {
 			}
 		)
 	}
+
 	static async getScheduleNextWeek(link: string): Promise<string> {
 		return HtmlDownloader.downloadUrlGet(
 			`https://www.fitnesshouse.ru/${link}`
 		)
+	}
+
+	static async getOfficesPage(regionId: number): Promise<string> {
+		return HtmlDownloader.downloadUrlPost('https://www.fitnesshouse.ru/schedule.html', { city: regionId })
 	}
 
 	static async getIndexPage(): Promise<string> {

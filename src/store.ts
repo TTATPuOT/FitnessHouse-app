@@ -13,7 +13,7 @@ const rootPersistConfig: PersistConfig<any> = {
 const dataPersistConfig = {
 	key: 'data',
 	storage: AsyncStorage,
-	whitelist: ['office'],
+	whitelist: ['office', 'city'],
 }
 
 const rootReducer = combineReducers({

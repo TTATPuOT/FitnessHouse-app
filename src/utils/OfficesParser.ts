@@ -1,18 +1,24 @@
 import HtmlDownloader from './HtmlDownloader'
 import convertToDom from '@utils/HtmlToDomConverter'
+import { Region } from './RegionsParser'
 
 export default class OfficesParser {
+	private region: Region
 	private list: Set<Office> = new Set()
 
-	static async getInstance(): Promise<OfficesParser> {
-		const offices = new OfficesParser()
+	static async getInstance(region: Region): Promise<OfficesParser> {
+		const offices = new OfficesParser(region)
 		await offices.download()
 
 		return offices
 	}
 
+	constructor(region: Region) {
+		this.region = region
+	}
+
 	private async download() {
-		const html = await HtmlDownloader.getIndexPage()
+		const html = await HtmlDownloader.getOfficesPage(this.region.id)
 		this.parseHtml(html)
 	}
 
@@ -29,6 +35,8 @@ export default class OfficesParser {
 
 			this.list.add({ name, code })
 		}
+
+		console.log(Array.from(this.list))
 	}
 
 	getAll(): Office[] {
