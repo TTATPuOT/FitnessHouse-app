@@ -64,3 +64,4 @@ buck-out/
 android/gradle.properties
 android/app/*.jks
 android/app/*.pepk
+android/app/google-serivces.json
