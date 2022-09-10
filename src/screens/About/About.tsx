@@ -1,3 +1,5 @@
+import { useAppSelector } from '@src/hooks/redux'
+import useRateApp from '@src/hooks/useRateApp'
 import React, { useCallback } from 'react'
 import {
 	Linking,
@@ -10,7 +12,10 @@ import {
 import DeviceInfo from 'react-native-device-info'
 
 const About = () => {
-	const handleLinkClick = useCallback(
+	const marketing = useAppSelector(store => store.marketing)
+	const handleRateApp = useRateApp()
+
+	const handleLinkPress = useCallback(
 		(url: string) => Linking.openURL(url),
 		[]
 	)
@@ -25,9 +30,18 @@ const About = () => {
 			<Text style={styles.h2}>Разработал</Text>
 			<Text style={styles.h1}>Антон Неверов</Text>
 			<View style={styles.space} />
+			<Text style={styles.h2}>
+				Пожалуйста, поставьте 5 звёд приложению
+			</Text>
+			<TouchableOpacity onPress={handleRateApp}>
+				<Text style={[styles.h1, styles.link]}>
+					🌟 Открыть Google Play
+				</Text>
+			</TouchableOpacity>
+			<View style={styles.space} />
 			<Text style={styles.h2}>По всем вопросам о работе приложения</Text>
 			<TouchableOpacity
-				onPress={() => handleLinkClick('mailto:neverov12@gmail.com')}
+				onPress={() => handleLinkPress('mailto:neverov12@gmail.com')}
 			>
 				<Text style={[styles.h1, styles.link]}>
 					neverov12@gmail.com
@@ -36,17 +50,21 @@ const About = () => {
 			<View style={styles.space} />
 			<Text style={styles.h2}>Сайт Fitness House</Text>
 			<TouchableOpacity
-				onPress={() => handleLinkClick('https://www.fitnesshouse.ru/')}
+				onPress={() => handleLinkPress('https://www.fitnesshouse.ru/')}
 			>
 				<Text style={[styles.h1, styles.link]}>fitnesshouse.ru</Text>
 			</TouchableOpacity>
 			<View style={styles.space} />
 			<Text style={styles.h2}>Сайт разработчика</Text>
 			<TouchableOpacity
-				onPress={() => handleLinkClick('https://patriotovsky.ru/')}
+				onPress={() => handleLinkPress('https://patriotovsky.ru/')}
 			>
 				<Text style={[styles.h1, styles.link]}>patriotovsky.ru</Text>
 			</TouchableOpacity>
+			<View style={styles.space} />
+			<Text style={styles.h2}>
+				Вы запустили приложение {marketing.launchesCount} раз
+			</Text>
 			<View style={styles.space} />
 			<Text style={styles.h2}>
 				Версия приложения {DeviceInfo.getVersion()}

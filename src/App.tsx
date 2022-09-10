@@ -16,12 +16,17 @@ import About from '@screens/About'
 import SplashScreen from 'react-native-splash-screen'
 import Filters from '@screens/Filters'
 import { SelectProvider } from '@mobile-reality/react-native-select-pro'
+import useScreenAnalytics from '@hooks/useScreenAnalytics'
+import AppLaunchHandler from '@components/AppLaunchHandler'
 
 moment.locale(['ru', 'en'])
 
 const Stack = createStackNavigator()
 
 const App = () => {
+	const { navigationRef, handleReady, handleStateChange } =
+		useScreenAnalytics()
+
 	useEffect(() => {
 		SplashScreen.hide()
 	}, [])
@@ -29,9 +34,15 @@ const App = () => {
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
+				<AppLaunchHandler />
 				<SelectProvider>
 					<SafeAreaView style={{ flex: 1 }}>
-						<NavigationContainer theme={DarkTheme}>
+						<NavigationContainer
+							ref={navigationRef}
+							onReady={handleReady}
+							onStateChange={handleStateChange}
+							theme={DarkTheme}
+						>
 							<Stack.Navigator initialRouteName='Home'>
 								<Stack.Screen
 									name='Home'

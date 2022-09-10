@@ -29,6 +29,7 @@ build/
 local.properties
 *.iml
 *.hprof
+.cxx/
 
 # node.js
 #
@@ -64,4 +65,4 @@ buck-out/
 android/gradle.properties
 android/app/*.jks
 android/app/*.pepk
-android/app/google-serivces.json
+android/app/*.json

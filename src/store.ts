@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import dataReducer from '@slices/data'
+import marketingReducer from '@slices/marketing'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { PersistConfig } from 'redux-persist/es/types'
 
@@ -18,6 +19,7 @@ const dataPersistConfig = {
 
 const rootReducer = combineReducers({
 	data: persistReducer(dataPersistConfig, dataReducer),
+	marketing: marketingReducer,
 })
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer)

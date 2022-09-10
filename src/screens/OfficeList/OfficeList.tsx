@@ -9,6 +9,7 @@ import { setOffice, setRegion } from '@slices/data'
 import { useAppNavigation } from '@hooks/useAppNavigation'
 import RegionsParser from '@utils/RegionsParser'
 import selectRegion from '@src/selectors/selectRegion'
+import analytics from '@react-native-firebase/analytics'
 
 const OfficeList = () => {
 	const dispatch = useAppDispatch()
@@ -49,7 +50,7 @@ const OfficeList = () => {
 	}, [offices])
 
 	const handleChangeRegion = useCallback(
-		(regionCode: string) => {
+		async (regionCode: string) => {
 			if (!regions) return
 
 			const region = regions.getAll().find(o => o.code === regionCode)
@@ -57,17 +58,21 @@ const OfficeList = () => {
 
 			dispatch(setRegion(region))
 			setIsSelectRegion(false)
+
+			await analytics().logEvent('selectRegion', { name: region.name })
 		},
 		[dispatch, navigation, regions]
 	)
 	const handleChangeOffice = useCallback(
-		(officeCode: string) => {
+		async (officeCode: string) => {
 			if (!offices) return
 
 			const office = offices.getAll().find(o => o.code === officeCode)
 			if (!office) return
 
 			dispatch(setOffice(office))
+			await analytics().logEvent('selectOffice', { office: office.name })
+			
 			navigation.goBack()
 		},
 		[dispatch, navigation, offices]

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import LessonBlock from '@components/Schedule/LessonBlock'
 import { TimePeriod } from '@utils/ScheduleParser'
+import RatingRequestBlock from './RatingRequestBlock'
 
 export interface TimeBlockProps {
 	period: TimePeriod
@@ -33,16 +34,21 @@ const TimeBlock = ({ period }: TimeBlockProps) => {
 	}, [period.time])
 
 	return (
-		<View style={styles.container}>
-			<View>
-				<View style={styles.time}>
-					<Text style={styles.timeText}>{period.time}</Text>
-					<Text style={styles.timeTextSmall}>00</Text>
+		<>
+			<View style={styles.container}>
+				<View>
+					<View style={styles.time}>
+						<Text style={styles.timeText}>{period.time}</Text>
+						<Text style={styles.timeTextSmall}>00</Text>
+					</View>
+					{!!status && (
+						<Text style={styles.description}>{status}</Text>
+					)}
 				</View>
-				{!!status && <Text style={styles.description}>{status}</Text>}
+				<View style={styles.lessons}>{lessonsBlocks}</View>
 			</View>
-			<View style={styles.lessons}>{lessonsBlocks}</View>
-		</View>
+			<RatingRequestBlock />
+		</>
 	)
 }
 
