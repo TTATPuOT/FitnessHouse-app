@@ -1,21 +1,43 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { useAppSelector } from '@src/hooks/redux'
+import useAppMarketing from '@src/hooks/useAppMarketing'
+import useRateApp from '@src/hooks/useRateApp'
+import React, { useCallback } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native'
 
-export interface RatingRequestBlockProps {}
+const RatingRequestBlock = () => {
+	const handleRateApp = useRateApp()
+	const { handleHideRateRequest } = useAppMarketing()
 
-const RatingRequestBlock = ({}: RatingRequestBlockProps) => {
+	const show = useAppSelector<boolean>(
+		store =>
+			store.marketing.ratingRequestShow &&
+			store.marketing.launchesCount >= 5
+	)
+	const handleErrorPress = useCallback(
+		() =>
+			Linking.openURL(
+				'mailto:neverov12@gmail.com?subject=Ошибка в приложении Fitness House&body=Здравствуйте! Есть проблема в вашем приложении:'
+			),
+		[]
+	)
+
+	if (!show) return null
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.header}>Вам нравится наше приложение?</Text>
 			<View style={styles.buttons}>
-				<TouchableOpacity style={styles.button}>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={handleErrorPress}
+				>
 					<Text style={styles.buttonText}>🤢 Есть проблемы</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.button}>
+				<TouchableOpacity style={styles.button} onPress={handleRateApp}>
 					<Text style={styles.buttonText}>🎉 Всё отлично</Text>
 				</TouchableOpacity>
 			</View>
-			<TouchableOpacity>
+			<TouchableOpacity onPress={handleHideRateRequest}>
 				<Text style={styles.close}>Не показывайте это мне больше</Text>
 			</TouchableOpacity>
 		</View>

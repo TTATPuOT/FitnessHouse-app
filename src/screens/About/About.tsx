@@ -1,4 +1,3 @@
-import { useAppSelector } from '@src/hooks/redux'
 import useRateApp from '@src/hooks/useRateApp'
 import React, { useCallback } from 'react'
 import {
@@ -12,7 +11,6 @@ import {
 import DeviceInfo from 'react-native-device-info'
 
 const About = () => {
-	const marketing = useAppSelector(store => store.marketing)
 	const handleRateApp = useRateApp()
 
 	const handleLinkPress = useCallback(
@@ -61,10 +59,6 @@ const About = () => {
 			>
 				<Text style={[styles.h1, styles.link]}>patriotovsky.ru</Text>
 			</TouchableOpacity>
-			<View style={styles.space} />
-			<Text style={styles.h2}>
-				Вы запустили приложение {marketing.launchesCount} раз
-			</Text>
 			<View style={styles.space} />
 			<Text style={styles.h2}>
 				Версия приложения {DeviceInfo.getVersion()}

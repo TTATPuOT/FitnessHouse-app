@@ -18,6 +18,7 @@ import Filters from '@screens/Filters'
 import { SelectProvider } from '@mobile-reality/react-native-select-pro'
 import useScreenAnalytics from '@hooks/useScreenAnalytics'
 import AppLaunchHandler from '@components/AppLaunchHandler'
+import Report from '@screens/Report'
 
 moment.locale(['ru', 'en'])
 
@@ -78,6 +79,13 @@ const App = () => {
 									component={About}
 									options={{
 										title: 'Об авторе',
+									}}
+								/>
+								<Stack.Screen
+									name='Report'
+									component={Report}
+									options={{
+										title: 'Сообщить об ошибке',
 									}}
 								/>
 							</Stack.Navigator>

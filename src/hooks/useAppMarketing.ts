@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useAppDispatch } from '@hooks/redux'
-import { appLaunch } from '@slices/marketing'
+import { appLaunch, hideRatingRequest } from '@slices/marketing'
 
 const useAppMarketing = () => {
 	const dispatch = useAppDispatch()
@@ -8,8 +8,11 @@ const useAppMarketing = () => {
 	const handleAppLaunch = useCallback(() => {
 		dispatch(appLaunch())
 	}, [dispatch])
+	const handleHideRateRequest = useCallback(() => {
+		dispatch(hideRatingRequest())
+	}, [dispatch])
 
-	return { handleAppLaunch }
+	return { handleAppLaunch, handleHideRateRequest }
 }
 
 export default useAppMarketing

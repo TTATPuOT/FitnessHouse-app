@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface MarketingState {
 	launchesCount: number
+	ratingRequestShow: boolean
 }
 
 const initialState: MarketingState = {
 	launchesCount: 0,
+	ratingRequestShow: true,
 }
 
 export const marketingSlice = createSlice({
@@ -16,9 +17,12 @@ export const marketingSlice = createSlice({
 		appLaunch: state => {
 			state.launchesCount += 1
 		},
+		hideRatingRequest: state => {
+			state.ratingRequestShow = false
+		},
 	},
 })
 
-export const { appLaunch } = marketingSlice.actions
+export const { appLaunch, hideRatingRequest } = marketingSlice.actions
 
 export default marketingSlice.reducer

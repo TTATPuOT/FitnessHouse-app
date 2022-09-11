@@ -47,7 +47,7 @@ const TimeBlock = ({ period }: TimeBlockProps) => {
 				</View>
 				<View style={styles.lessons}>{lessonsBlocks}</View>
 			</View>
-			<RatingRequestBlock />
+			{status === 'скоро' && <RatingRequestBlock />}
 		</>
 	)
 }
