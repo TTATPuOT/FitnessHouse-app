@@ -8,7 +8,14 @@ const useNavigateToDetails = () => {
 
 	return useCallback(
 		async (lesson: Lesson) => {
-			await analytics().logEvent('lessonDetails', { lesson })
+			await analytics().logEvent('lessonDetails', {
+				title: lesson.title,
+				time: lesson.time,
+				paid: lesson.paid,
+				isSection: lesson.isSection,
+				teacher: lesson.teacher,
+				location: lesson.location,
+			})
 
 			navigation.navigate('Details', {
 				lesson,

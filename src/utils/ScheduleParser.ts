@@ -81,6 +81,7 @@ export default class ScheduleParser {
 		const date = new Date()
 		date.setMonth(month - 1)
 		date.setDate(day)
+		date.setHours(0, 0, 0, 0)
 
 		return date
 	}
@@ -122,6 +123,7 @@ export default class ScheduleParser {
 			),
 			description: ScheduleParser.getDescriptionFromOnClick(onclick),
 			time: parseInt(time.split('.')[0]),
+			date: new Date(), //Далее дата затрётся на новую
 			teacher,
 			location,
 			paid,
@@ -146,16 +148,23 @@ export default class ScheduleParser {
 		)
 
 		if (!timePeriod) {
-			timePeriod = ScheduleParser.createTimePeriod(lesson.time)
+			timePeriod = ScheduleParser.createTimePeriod(column, lesson.time)
 			column.timePeriods.push(timePeriod)
 		}
 
+		this.setLessonDateFromColumnDate(lesson, column)
 		timePeriod.lessons.push(lesson)
 	}
 
-	private static createTimePeriod(time: number): TimePeriod {
+	private setLessonDateFromColumnDate(lesson: Lesson, column: Column) {
+		lesson.date = new Date(column.date)
+		lesson.date.setHours(lesson.time)
+	}
+
+	private static createTimePeriod(column: Column, time: number): TimePeriod {
 		return {
 			time,
+			date: new Date(column.date),
 			lessons: [],
 		}
 	}
@@ -181,6 +190,7 @@ export interface Column {
 
 export interface TimePeriod {
 	time: number
+	date: Date
 	lessons: Lesson[]
 }
 
@@ -193,4 +203,5 @@ export interface Lesson {
 	teacher?: string
 	location?: string
 	description?: string
+	date: Date
 }

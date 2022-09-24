@@ -25,10 +25,13 @@ const TimeBlock = ({ period }: TimeBlockProps) => {
 		return blocks
 	}, [period])
 	const status = useMemo<string>(() => {
-		const currentTime = new Date().getHours()
+		const date = new Date()
+		if (date.toDateString() !== period.date.toDateString()) return ''
 
-		if (period.time === currentTime) return 'сейчас'
-		if (period.time - 1 === currentTime) return 'скоро'
+		const currentHours = date.getHours()
+
+		if (period.time === currentHours) return 'сейчас'
+		if (period.time - 1 === currentHours) return 'скоро'
 
 		return ''
 	}, [period.time])

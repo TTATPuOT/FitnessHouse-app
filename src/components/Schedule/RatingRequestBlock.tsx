@@ -3,6 +3,7 @@ import useAppMarketing from '@src/hooks/useAppMarketing'
 import useRateApp from '@src/hooks/useRateApp'
 import React, { useCallback } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native'
+import analytics from '@react-native-firebase/analytics'
 
 const RatingRequestBlock = () => {
 	const handleRateApp = useRateApp()
@@ -14,12 +15,20 @@ const RatingRequestBlock = () => {
 			store.marketing.launchesCount >= 5
 	)
 	const handleErrorPress = useCallback(
-		() =>
-			Linking.openURL(
+		async () => {
+			await analytics().logEvent('rateClick', { like: false })
+			await Linking.openURL(
 				'mailto:neverov12@gmail.com?subject=Ошибка в приложении Fitness House&body=Здравствуйте! Есть проблема в вашем приложении:'
-			),
-		[]
+			)
+			await handleHideRateRequest()
+		},
+		[handleHideRateRequest]
 	)
+	const handleAllGoodPress = useCallback(async () => {
+		await analytics().logEvent('rateClick', { like: true })
+		await handleRateApp()
+		await handleHideRateRequest()
+	}, [handleRateApp, handleHideRateRequest])
 
 	if (!show) return null
 
@@ -33,7 +42,7 @@ const RatingRequestBlock = () => {
 				>
 					<Text style={styles.buttonText}>🤢 Есть проблемы</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.button} onPress={handleRateApp}>
+				<TouchableOpacity style={styles.button} onPress={handleAllGoodPress}>
 					<Text style={styles.buttonText}>🎉 Всё отлично</Text>
 				</TouchableOpacity>
 			</View>
